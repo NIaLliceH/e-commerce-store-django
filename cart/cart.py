@@ -1,4 +1,4 @@
-# from decimal import Decimal
+from copy import deepcopy
 
 from store.models import Product
 
@@ -19,25 +19,35 @@ class Cart():
             self.data[product_id]['qty'] += product_quantity # add this prod_id with qty into cart
         else:
             self.data[product_id] = {
-                'price': str(product.price), # should not store price since it might change
+                # 'price': str(product.price), # should not store price since it might change
                 'qty': product_quantity
             }
-        print(self.data[product_id])
+
         self.session.modified = True # notify session has been modified
+        
+        
+    def delete(self, product_id):
+        product_id = str(product_id)
+        
+        if product_id in self.data:
+            del self.data[product_id]
+            
+            self.session.modified = True
         
         
     def get_total(self):
         return sum(item['product'].price * item['qty'] for item in self.__iter__())
-        
+    
     
     def __len__(self):
         return sum(item['qty'] for item in self.data.values())
         
         
     def __iter__(self): # for item in Cart obj
-        cart = self.data.copy()
+        # cart = self.data.copy() # shallow copy
+        cart = deepcopy(self.data)
             
-        for prod_id in self.data.keys():
+        for prod_id in cart.keys():
             prod = Product.objects.get(id=prod_id)
             cart[prod_id]['product'] = prod
             yield cart[prod_id]

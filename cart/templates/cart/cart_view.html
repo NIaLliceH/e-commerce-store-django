@@ -9,12 +9,11 @@
     <div class="container">
       <h1 class="h5">Shopping cart</h1>
       <hr />
-      <!-- LP -->
       {% for item in cart %}
         {% with product=item.product %}
           <br />
 
-          <div class="row mb-4 border product-item">
+          <div class="row mb-4 border product-item product-{{ product.id }}">
             <div class="col-md-3 col-lg-2 order-md-first bg-light">
               <img class="img-fluid mx-auto d-block" width="200px" alt="Responsive image" src="{{ product.image.url }}" />
             </div>
@@ -63,7 +62,6 @@
         {% endwith %}
       {% endfor %}
 
-      <!-- LP -->
       <div class="col-12 text-end">
         <div class="h6 fw-bold">
           Total price: $<div id="total" class="d-inline-flex">{{ cart.get_total|intcomma }}</div>
@@ -87,19 +85,22 @@
         type: 'POST',
         url: '{% url "cart-delete" %}',
         data: {
-          product_id: $(this).data('index'),
+          product_id: $(this).data('index'), // data-index
           csrfmiddlewaretoken: '{{csrf_token}}', // for security
-          action: 'post'
+          action: 'delete'
         },
     
         success: function (json) {
-          //console.log(json)
-          location.reload()
-          document.getElementById('cart-qty').textContent = json.qty
-          document.getElementById('total').textContent = json.total
+          console.log(json.message)
+          // location.reload() // reload page, no need element update anymore
+          document.getElementById('cart-qty').textContent = json.cart_quantity
+          document.getElementById('total').textContent = json.cart_total
+          $('.product-' + json.product_id).remove()
         },
     
-        error: function (xhr, errmsg, err) {}
+        error: function (xhr, errmsg, err) {
+          console.log(errmsg)
+        }
       })
     })
     
@@ -114,12 +115,12 @@
           product_id: $(this).data('index'),
           product_quantity: $('#select' + theproductid + ' option:selected').text(),
           csrfmiddlewaretoken: '{{csrf_token}}',
-          action: 'post'
+          action: 'update'
         },
     
         success: function (json) {
-          //console.log(json)
-          location.reload()
+          console.log(json.message)
+          // location.reload()
           document.getElementById('cart-qty').textContent = json.qty
           document.getElementById('total').textContent = json.total
         },
