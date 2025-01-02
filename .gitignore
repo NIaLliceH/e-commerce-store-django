@@ -1,0 +1,45 @@
+# Python-related
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+env/
+
+# Django-related
+db.sqlite3
+*.log
+*.pot
+media/
+
+# Environment-specific
+*.env
+.env.*
+
+# IDEs/Editors
+.vscode/
+
+# Byte-compiled and optimized Python files
+*.py[cod]
+*$py.class
+
+# Migrations
+*/migrations/*.py
+!*/migrations/__init__.py
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Docker
+*.pid
+*.seed
+
+# Coverage
+.coverage
+htmlcov/
+coverage.xml
+.cache/
+
+# Testing
+.junit/
+test-results/
