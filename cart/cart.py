@@ -12,8 +12,8 @@ class Cart():
         self.data = self.session['cart_info'] # cart_info keep cart cache (prod_id: price, qty)
     
     
-    def add(self, product, product_quantity):
-        product_id = str(product.id)
+    def add(self, product_id: str, product_quantity: int):
+        # product_id = str(product.id)
         
         if product_id in self.data:
             self.data[product_id]['qty'] += product_quantity # add this prod_id with qty into cart
@@ -24,11 +24,16 @@ class Cart():
             }
 
         self.session.modified = True # notify session has been modified
+    
+    
+    def update(self, product_id: str, product_quantity: int):
+        if product_id in self.data:
+            self.data[product_id]['qty'] = product_quantity
+            
+            self.session.modified = True
         
         
-    def delete(self, product_id):
-        product_id = str(product_id)
-        
+    def delete(self, product_id: str):        
         if product_id in self.data:
             del self.data[product_id]
             

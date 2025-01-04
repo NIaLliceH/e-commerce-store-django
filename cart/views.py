@@ -15,11 +15,11 @@ def cart_add(request):
     
     data = request.POST # get the request payload
     if data.get('action') == 'post':
-        prod_id = int(data.get('product_id'))
+        prod_id = str(data.get('product_id'))
         prod_qty = int(data.get('product_quantity'))
         
-        prod = get_object_or_404(Product, id=prod_id)
-        cart.add(prod, prod_qty)
+        # prod = get_object_or_404(Product, id=prod_id)
+        cart.add(prod_id, prod_qty)
         
         response = JsonResponse({
             'message': 'sucessfully added to cart',
@@ -33,7 +33,28 @@ def cart_add(request):
 
 
 def cart_update(request):
-    pass
+    cart = Cart(request)
+    
+    data = request.POST
+    if data.get('action') == 'update':
+        prod_id = str(data.get('product_id'))
+        prod_qty = int(data.get('product_quantity'))
+        cart.update(prod_id, prod_qty)
+        
+        prod_price = get_object_or_404(Product, id=prod_id).price
+        
+        response = JsonResponse({
+            'message': 'successfully updated product',
+            'cart_quantity': cart.__len__(),
+            'product_total': intcomma(prod_price * prod_qty),
+            'cart_total': intcomma(cart.get_total())
+        }, status=200)
+        
+        return response
+    else:
+        return JsonResponse({
+            'message': 'require update action'
+        }, status=400)
 
 
 def cart_delete(request):
@@ -41,12 +62,12 @@ def cart_delete(request):
     
     data = request.POST
     if data.get('action') == 'delete':
-        prod_id = data.get('product_id')
+        prod_id = str(data.get('product_id'))
         cart.delete(prod_id)
                 
         response = JsonResponse({
             'message': 'succesfully removed from cart',
-            'product_id': prod_id,
+            # 'product_id': prod_id,
             'cart_quantity': cart.__len__(),
             'cart_total': intcomma(cart.get_total())
         }, status=200)
