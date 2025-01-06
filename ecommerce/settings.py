@@ -40,9 +40,13 @@ INSTALLED_APPS = [
     
     'store', # django app for store
     'cart', # django app for cart
+    'account', # django app for account
     'django.contrib.humanize', # for price format
     'mathfilters', # perform calc in templates
+    'crispy_forms'
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

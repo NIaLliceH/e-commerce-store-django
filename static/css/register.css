@@ -1,0 +1,9 @@
+.form-layout {
+    border-radius: 20px;
+    width: 500px;
+    /* margin: 20px auto; */
+}
+
+body {
+    background-color: rgb(142, 160, 178);
+}
