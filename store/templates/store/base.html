@@ -8,16 +8,17 @@
     <!-- load a theme from Bootswatch -->
     <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css" />
     <!-- include the Font Awesome library for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /> {% endcomment %}
+    <script src="https://kit.fontawesome.com/6aef00342d.js" crossorigin="anonymous"></script>
     <!-- link a custom CSS file -->
     {% comment %} <link rel="stylesheet" href="{% static 'css/styles.css' %}" /> {% endcomment %}
 
-    <title>Edenthought</title>
+    <title>DjangStore</title>
   </head>
 
   <body>
     <nav class="navbar navbar-expand-lg bg-primary justify-content-center">
-      <a class="navbar-brand main-heading text-white" href="{% url 'store' %}">&nbsp; &nbsp; Edenthought</a>
+      <a class="navbar-brand main-heading text-white" href="{% url 'store' %}">&nbsp; &nbsp; DjangStore</a>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 
