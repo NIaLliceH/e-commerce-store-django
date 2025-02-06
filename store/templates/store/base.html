@@ -46,7 +46,7 @@
         <ul class="navbar-nav ms-auto">
           {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="btn btn-alert navbar-btn text-white" type="button" href="{% url 'store' %}"><i class="fa fa-home" aria-hidden="true"></i> &nbsp; Dashboard</a>
+              <a class="btn btn-alert navbar-btn text-white" type="button" href="{% url 'dashboard' %}"><i class="fa fa-home" aria-hidden="true"></i> &nbsp; Dashboard</a>
             </li>
           {% else %}
             <li class="nav-item">
@@ -56,11 +56,11 @@
 
           {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="btn btn-alert navbar-btn text-white" type="button" href="{% url 'store' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> &nbsp; Logout</a>
+              <a class="btn btn-alert navbar-btn text-white" type="button" href="{% url 'user-logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> &nbsp; Logout</a>
             </li>
           {% else %}
             <li class="nav-item">
-              <a class="btn btn-alert navbar-btn text-white" type="button" href="{% url 'store' %}">Login</a>
+              <a class="btn btn-alert navbar-btn text-white" type="button" href="{% url 'user-login' %}">Login</a>
             </li>
           {% endif %}&nbsp; &nbsp; &nbsp;<li class="nav-item">
             <a type="button" role="button" href="{% url 'cart-get' %}" class="btn btn-outline-secondary">

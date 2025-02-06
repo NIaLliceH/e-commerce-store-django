@@ -1,0 +1,26 @@
+{% extends "store/base.html" %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}" />
+
+<div class="container bg-white shadow-md p-5 form-layout">
+    <h3> Delete this account! </h3>
+
+    <hr>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+        
+        <p>Are you sure ?</p>
+        <br>
+        
+        <button type="submit" class="btn btn-danger btn-lg w-100 btl-block p-2">
+            &nbsp; Confirm
+        </button>
+    </form>
+</div>
+
+{% endblock content %}

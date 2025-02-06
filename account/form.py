@@ -1,7 +1,10 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django import forms
+from django.forms.widgets import PasswordInput, TextInput
 
+
+# registration form
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
@@ -24,3 +27,25 @@ class CreateUserForm(UserCreationForm):
             raise forms.ValidationError('Email is no longer than 350 characters')
         
         return email
+    
+    
+# login form
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(widget=TextInput())
+    password = forms.CharField(widget=PasswordInput())
+    
+    
+# update form
+class UpdateUserForm(forms.ModelForm):
+    password = None
+
+
+    def __init__(self, *args, **kwargs):
+        super(UpdateUserForm, self).__init__(*args, **kwargs)
+        
+        self.fields['email'].required = True
+    
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+        exclude = ['pasword1', 'password2']
