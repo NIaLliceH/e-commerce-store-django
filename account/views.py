@@ -70,6 +70,8 @@ def email_verification_failed(request):
 
 
 def user_login(request):
+    form = LoginForm()
+    
     if request.method == 'POST':
         form = LoginForm(request, data=request.POST)
         
@@ -81,23 +83,22 @@ def user_login(request):
             if user is not None:
                 login(request, user) # set logged-in status in django
                 return redirect('dashboard')
-            # else:
-            #     print('Invalid username or password')
-            #     form = LoginForm()
-            #     data = {
-            #         'form': form,
-            #         'message': 'Invalid username or password'
-            #     }
-            #     return render(request, 'account/user_login.html', context=data)
                 
             
-    form = LoginForm()
     data = {'form': form}
     return render(request, 'account/user_login.html', context=data)
 
 
 def user_logout(request):
-    logout(request)
+    # instead of logout(request), delete all session keys except 'cart_info'
+    try:
+        for key in list(request.session.keys()):
+            if key != 'cart_info':
+                del request.session[key]
+    except KeyError:
+        pass
+    
+    # logout(request)
     return redirect('store')
 
 
