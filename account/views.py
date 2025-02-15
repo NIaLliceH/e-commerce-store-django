@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 
-from .form import CreateUserForm, LoginForm, UpdateUserForm
+from .forms import CreateUserForm, LoginForm, UpdateUserForm
 from .token import user_tokenizer_generate
 
 def register(request):
@@ -78,10 +78,18 @@ def user_login(request):
             password = request.POST.get('password')
             
             user = authenticate(request, username=username, password=password)
-            
             if user is not None:
                 login(request, user) # set logged-in status in django
                 return redirect('dashboard')
+            # else:
+            #     print('Invalid username or password')
+            #     form = LoginForm()
+            #     data = {
+            #         'form': form,
+            #         'message': 'Invalid username or password'
+            #     }
+            #     return render(request, 'account/user_login.html', context=data)
+                
             
     form = LoginForm()
     data = {'form': form}
@@ -98,8 +106,10 @@ def dashboard(request):
     return render(request, 'account/dashboard.html')
 
 
-@login_required(login_url='profile-setting')
-def profile_setting(request):
+@login_required(login_url='profile-edit')
+def profile_edit(request):
+    form = UpdateUserForm(instance=request.user)
+    
     if request.method == 'POST':
         form = UpdateUserForm(request.POST, instance=request.user)
         
@@ -107,9 +117,8 @@ def profile_setting(request):
             form.save()
             return redirect('dashboard')
     
-    form = UpdateUserForm(instance=request.user)
     data = {'form': form}
-    return render(request, 'account/profile_setting.html', context=data)
+    return render(request, 'account/profile_edit.html', context=data)
 
 
 @login_required(login_url='delete-account')

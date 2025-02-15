@@ -22,10 +22,16 @@
 
         <br>
         
-        <button type="submit" class="btn btn-secondary btn-lg w-100 btl-block p-2">
+        <button type="submit" class="btn btn-primary">
             &nbsp; Update
         </button>
+
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+            Cancel
+        </a>
     </form>
 </div>
+
+<div class="container bg-white"></div>
 
 {% endblock content %}

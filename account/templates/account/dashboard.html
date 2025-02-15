@@ -20,7 +20,7 @@
         <div class="card mb-4">
             <div class="card-body">
                 <h5 class="card-title">Profile Setting</h5>
-                <a href="{% url 'profile-setting' %}" class="btn btn-primary">
+                <a href="{% url 'profile-edit' %}" class="btn btn-primary">
                     <i class="fas fa-user-edit"></i> Edit Profile
                 </a>
 
@@ -31,14 +31,14 @@
                 </a>
             </div>
         </div>
-        <div class="card mb-4">
+        {% comment %} <div class="card mb-4">
             <div class="card-body">
                 <h5 class="card-title">Logout</h5>
                 <a href="{% url 'user-logout' %}" class="btn btn-danger">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </div>
-        </div>
+        </div> {% endcomment %}
     </div>
 </section>
 

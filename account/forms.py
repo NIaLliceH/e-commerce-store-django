@@ -39,13 +39,24 @@ class LoginForm(AuthenticationForm):
 class UpdateUserForm(forms.ModelForm):
     password = None
 
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+        exclude = ['pasword1', 'password2']
 
     def __init__(self, *args, **kwargs):
         super(UpdateUserForm, self).__init__(*args, **kwargs)
         
         self.fields['email'].required = True
     
-    class Meta:
-        model = User
-        fields = ['username', 'email']
-        exclude = ['pasword1', 'password2']
+    
+    # override
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        
+        if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('This email is already exists')
+        if len(email) >= 350:
+            raise forms.ValidationError('Email is no longer than 350 characters')
+        
+        return email

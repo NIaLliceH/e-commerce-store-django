@@ -15,11 +15,14 @@
         {% csrf_token %}
         
         <p>Are you sure ?</p>
-        <br>
         
-        <button type="submit" class="btn btn-danger btn-lg w-100 btl-block p-2">
+        <button type="submit" class="btn btn-danger">
             &nbsp; Confirm
         </button>
+
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+            Cancel
+        </a>
     </form>
 </div>
 
